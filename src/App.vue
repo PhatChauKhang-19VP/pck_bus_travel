@@ -12,7 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  padding-left: 10px;
+  padding-left: 15px;
   padding-right: 10px;
 }
 </style>

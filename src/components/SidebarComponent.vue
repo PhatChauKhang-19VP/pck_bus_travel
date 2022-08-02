@@ -3,10 +3,6 @@
     <div id="title">Lọc kết quả</div>
     <div id="body" class="pb-1">
       <div class="my-3">
-        <div>Điểm đi</div>
-        <FormSelectDeparture />
-      </div>
-      <div class="my-3">
         <div>Điểm đến</div>
         <FormSelectDestination />
       </div>
@@ -62,6 +58,7 @@ let priceTo = ref(6000000)
 
 <style lang="scss" scoped>
 #sidebar {
+  display: inline-block;
   width: 300px;
   height: 100%;
   background-color: rgb(242, 242, 242);

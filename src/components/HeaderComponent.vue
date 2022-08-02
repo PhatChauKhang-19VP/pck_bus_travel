@@ -2,24 +2,28 @@
   <header>
     <div id="left">PCK BUS TRAVEL</div>
     <div id="right">
-      <div class="mx-2">
-        <a>Tour</a>
-        <div class="slider"></div>
-      </div>
-      <div class="mx-2">
-        <a>Thanh toán</a>
-        <div class="slider"></div>
-      </div>
-      <div>
-        <img src="@/assets/user.png" alt="" />
-        <div>Tài khoản</div>
-        <img src="@/assets/arrow-down.png" alt="" />
-      </div>
+      <b-navbar type="dark" variant="dark">
+        <b-navbar-nav>
+          <b-nav-item href="#">Tour</b-nav-item>
+          <b-nav-item href="#">Thanh toán </b-nav-item>
+          <div>
+            <img src="@/assets/user.png" alt="" />
+            <b-nav-item-dropdown class="text-decoration-none" text="Tài khoản" menu-class="w-100" right>
+              <b-dropdown-item href="#">Thông tin cá nhân</b-dropdown-item>
+              <b-dropdown-item href="#">Lịch sử đặt tour</b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item href="#">Đăng xuất</b-dropdown-item>
+            </b-nav-item-dropdown>
+          </div>
+        </b-navbar-nav>
+      </b-navbar>
     </div>
   </header>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts" setup>
+import { ref } from 'vue'
+</script>
 
 <style lang="scss" scoped>
 header {
@@ -43,36 +47,44 @@ header {
     font-size: 20px !important;
     cursor: pointer;
 
-    .slider {
+    b-navbar {
       width: 100%;
-      height: 3px;
-      background-color: #0d6efd;
-    }
+      list-style-type: none;
 
-    > div:nth-child(1) > a {
-      width: 15%;
-    }
+      > b-navbar-nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
 
-    > div:nth-child(2) > a {
-      width: 40%;
-      text-align: center;
-    }
+        > li.nav-item:nth-child(1) {
+          width: 20%;
+          display: flex;
+          justify-content: center;
+        }
 
-    div:nth-child(3) {
-      width: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 5px;
+        > li.nav-item:nth-child(2) {
+          width: 39%;
+          display: flex;
+          justify-content: center;
+        }
 
-      div {
-        width: fit-content;
-        padding-left: 5px;
-      }
+        > div:nth-child(3) {
+          width: 140px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 10px;
 
-      img {
-        width: 25px;
-        height: 25px;
+          img {
+            width: 25px;
+            height: 25px;
+          }
+
+          .nav-item.dropdown {
+            list-style-type: none;
+          }
+        }
       }
     }
   }
