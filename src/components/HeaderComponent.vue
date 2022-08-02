@@ -8,7 +8,12 @@
           <b-nav-item href="#">Thanh toán </b-nav-item>
           <div>
             <img src="@/assets/user.png" alt="" />
-            <b-nav-item-dropdown class="text-decoration-none" text="Tài khoản" menu-class="w-100" right>
+            <b-nav-item-dropdown
+              class="text-decoration-none"
+              text="Tài khoản"
+              menu-class="w-100"
+              right
+            >
               <b-dropdown-item href="#">Thông tin cá nhân</b-dropdown-item>
               <b-dropdown-item href="#">Lịch sử đặt tour</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
@@ -22,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref } from "vue"
 </script>
 
 <style lang="scss" scoped>

@@ -13,14 +13,27 @@
       <div class="my-3">
         <div>Số ngày</div>
         <div id="button">
-          <b-button size="sm" variant="outline-primary">1 - 3 ngày</b-button>
+          <template v-for="value in btnData" :key="value.stt">
+            <b-button
+              size="sm"
+              :variant="value.variant"
+              @click="btnPickDayRangeClick(value.stt)"
+            >
+              {{ value.text }}
+            </b-button>
+          </template>
+          <!-- <b-button size="sm" variant="outline-primary">1 - 3 ngày</b-button>
           <b-button size="sm" variant="outline-primary">4 - 7 ngày</b-button>
-          <b-button size="sm" variant="outline-primary">8 - 10 ngày</b-button>
+          <b-button size="sm" variant="outline-primary">8 - 10 ngày</b-button> -->
         </div>
       </div>
       <div class="my-3">
         <div>Số người</div>
-        <b-form-input type="number" min="0" v-model="peopleNumber"></b-form-input>
+        <b-form-input
+          type="number"
+          min="0"
+          v-model="peopleNumber"
+        ></b-form-input>
       </div>
       <div class="my-3">
         <div>Khoảng giá (VND)</div>
@@ -47,13 +60,49 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import FormSelectDeparture from './FormSelectDeparture.vue'
-import FormSelectDestination from './FormSelectDestination.vue'
+import { reactive, ref } from "vue"
+import FormSelectDeparture from "./FormSelectDeparture.vue"
+import FormSelectDestination from "./FormSelectDestination.vue"
 
 let peopleNumber = ref(0)
 let priceFrom = ref(0)
 let priceTo = ref(6000000)
+
+// data
+const btnData = reactive([
+  {
+    stt: 1,
+    text: "1 - 3 ngày",
+    value: "1-3",
+    variant: "outline-primary",
+    active: true,
+  },
+  {
+    stt: 2,
+    text: "4 - 7 ngày",
+    value: "4-7",
+    variant: "outline-primary",
+    active: false,
+  },
+  {
+    stt: 3,
+    text: "8 - 10 ngày",
+    value: "8-10",
+    variant: "outline-primary",
+    active: false,
+  },
+])
+
+const btnPickDayRangeClick = (stt: number) => {
+  console.log("btnPickDayRangeClick", stt)
+
+  btnData.forEach((value) => {
+    value.active = false
+    value.variant = "outline-primary"
+  })
+  btnData[stt - 1].active = true
+  btnData[stt - 1].variant = "primary"
+}
 </script>
 
 <style lang="scss" scoped>
@@ -95,7 +144,7 @@ let priceTo = ref(6000000)
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   }
 
-  input[type='date'] {
+  input[type="date"] {
     width: 96%;
     padding-right: 10px;
   }
@@ -107,12 +156,12 @@ let priceTo = ref(6000000)
   justify-content: space-between;
 }
 
-input[type='number'] {
+input[type="number"] {
   width: 96%;
 }
 
-input[type='number']#priceFrom,
-input[type='number']#priceTo {
+input[type="number"]#priceFrom,
+input[type="number"]#priceTo {
   display: inline-block;
   width: 41%;
 }

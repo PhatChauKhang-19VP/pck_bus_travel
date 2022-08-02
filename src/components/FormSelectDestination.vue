@@ -1,16 +1,46 @@
 <template>
-  <b-form-select v-model="form" :options="options"></b-form-select>
+  <b-form-select v-model="selected" :options="options"></b-form-select>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, onUpdated, ref } from "vue"
+import { Province } from "../models/Province.js"
+import { useStore } from "vuex"
+import { key } from "../store"
 
-const form = ref()
-const options = [
-  { value: null, text: 'Chọn điểm đến', disabled: true },
-  { value: 'a', text: 'TP.Hồ Chí Minh' },
-  { value: 'b', text: 'Hà Nội' },
-]
+const store = useStore(key)
+
+const selected = ref(null)
+
+const options = ref<{ value: any; text: string; disabled: boolean }[]>([
+  { value: "", text: "Chọn tỉnh/thành phố", disabled: true },
+])
+
+const listProvinces = ref<Province[]>([])
+
+onMounted(async () => {
+  const response = await fetch("http://localhost:3000/address/provinces")
+  listProvinces.value = await response.json()
+
+  options.value.push(
+    ...listProvinces.value.map((item) => ({
+      value: item.code,
+      text: `${item.code}. ${item.full_name}`,
+      disabled: false,
+    }))
+  )
+})
+
+onUpdated(() => {
+  if (listProvinces.value.find((item) => item.code == selected.value)) {
+    store.commit(
+      "addProvince",
+      listProvinces.value.find(
+        (item) => item.code == selected.value
+      ) as Province
+    )
+  }
+})
 </script>
 
 <style lang="scss" scoped>
