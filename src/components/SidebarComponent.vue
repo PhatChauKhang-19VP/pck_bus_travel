@@ -8,7 +8,7 @@
       </div>
       <div class="my-3" id="datepicker">
         <div>Ngày đi</div>
-        <input type="date" />
+        <input type="date" v-model="dateSelected" />
       </div>
       <div class="my-3">
         <div>Số ngày</div>
@@ -44,7 +44,8 @@
           min="0"
           max="5000000"
           step="500000"
-        ></b-form-input>
+        >
+        </b-form-input>
         <span class="mx-3">-</span>
         <b-form-input
           id="priceTo"
@@ -53,7 +54,8 @@
           min="6000000"
           max="10000000"
           step="500000"
-        ></b-form-input>
+        >
+        </b-form-input>
       </div>
     </div>
   </div>
@@ -67,6 +69,8 @@ import FormSelectDestination from "./FormSelectDestination.vue"
 let peopleNumber = ref(0)
 let priceFrom = ref(0)
 let priceTo = ref(6000000)
+
+const dateSelected = ref(null)
 
 // data
 const btnData = reactive([

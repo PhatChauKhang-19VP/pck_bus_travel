@@ -9,7 +9,7 @@
       @click="testOnClick"
     >
     </b-form-tags>
-    <p class="mt-2">Value: {{ result }}</p>
+    <!-- <p class="mt-2">Value: {{ result }}</p> -->
   </div>
 </template>
 
@@ -40,7 +40,7 @@ const store = useStore(key)
 const result = computed(() => store.getters.getArrayProvincesNames)
 
 const testOnClick = (e: any) => {
-  if (e.target.tagName === "button") {
+  if (e.target.tagName === "BUTTON") {
     const pid = e.target.parentNode.title.split(". ")[0]
     store.commit("removeProvince", pid)
   }
