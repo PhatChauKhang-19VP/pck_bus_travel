@@ -16,7 +16,7 @@
           </template>
         </template>
         <center>
-          <div class="overflow-auto py-2">
+          <div class="overflow-auto py-2" v-if="rows >= 1">
             <!-- Use text in props -->
             <b-pagination
               v-model="currentPage"
@@ -39,7 +39,7 @@ import TheHeader from "@/components/HeaderComponent.vue" // @ is an alias to /sr
 import TheSidebar from "@/components/SidebarComponent.vue"
 import TheCard from "@/components/CardComponent.vue"
 import TheSearchResult from "@/components/SearchResultComponent.vue"
-import { reactive, ref, onMounted, computed } from "vue"
+import { reactive, ref, onMounted, computed, onUpdated } from "vue"
 import { useStore } from "vuex"
 import { key } from "../store"
 
@@ -69,11 +69,16 @@ onMounted(async () => {
     }),
   })
   const data = await response.json()
-  currentPage.value = 1
+
   store.commit("setTourSearchResult", Array.from(data))
 })
 const listTours = computed(() => {
   return store.state.tourSearchResult
+})
+
+onUpdated(() => {
+  console.log("onUpdated")
+  currentPage.value = 1
 })
 </script>
 

@@ -33,11 +33,24 @@
       <a href="#" class="btn btn-danger float-start mb-1">Đặt tour</a>
 
       <div>
-        <b-button v-b-modal.modal variant="primary" class="float-end mb-1"
-          >Xem chi tiết</b-button
+        <b-button
+          v-b-modal.modal
+          variant="primary"
+          class="float-end mb-1"
+          v-on:click="
+            () => {
+              isModalActive = true
+            }
+          "
+        >
+          Xem chi tiết</b-button
         >
 
-        <DetailModal />
+        <DetailModal
+          :tour="props.tour"
+          v-show="isModalActive"
+          @hidden="onModalHidden"
+        />
       </div>
       <!-- <a href="#" class="btn btn-primary float-end mb-3">Xem chi tiết</a> -->
     </div>
@@ -45,9 +58,11 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue"
+import { ref, defineProps } from "vue"
 import { Tour } from "../models/Tour"
 import DetailModal from "./DetailModalComponent.vue"
+
+const isModalActive = ref(false)
 
 const getDateMMDDYYYY = (date: Date) => {
   const day = date.getDate()
@@ -60,6 +75,12 @@ interface IProps {
   tour: Tour
 }
 const props = defineProps<IProps>()
+
+const onModalHidden = () => {
+  console.log("onModalHidden")
+
+  isModalActive.value = false
+}
 </script>
 
 <style lang="scss">

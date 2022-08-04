@@ -1,7 +1,7 @@
 <template>
   <b-modal
-    no-close-on-backdrop
     hide-footer
+    no-close-on-backdrop
     id="modal"
     size="xl"
     title="Thông tin tour"
@@ -13,82 +13,128 @@
     <div>
       <b-tabs content-class="mt-3">
         <b-tab title="Lịch trình:" active
-          ><b-table bordered :fields="header" :items="schedule"></b-table
+          ><b-table
+            bordered
+            :fields="headerSchedule"
+            :items="fetchSchedule"
+          ></b-table
         ></b-tab>
-        <b-tab title="Lộ trình"><p>I'm the second tab</p></b-tab>
+        <b-tab title="Lộ trình"
+          ><b-table bordered :fields="headerMove" :items="fetchMove"></b-table
+        ></b-tab>
       </b-tabs>
     </div>
-
-    <!-- <h5 class="fs-5 my-1 ms-2">Ngày thứ {{ detail.nthDay }}:</h5>
-            <ul>s
-                <li class="my-1">
-                    Thời gian: {{ detail.startTime }} - {{ detail.endTime }}
-                </li>
-                <li class="my-1">Địa điểm tham quan: {{ detail.visitAttraction }}</li>
-                <li class="my-1">Mô tả địa điểm: {{ detail.description }}</li>
-            </ul> -->
   </b-modal>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue"
+import { reactive, ref, defineProps, onMounted, onUpdated } from "vue"
+import { Tour } from "../models/Tour"
+import { Schedule } from "../models/Schedule"
+import { Move } from "../models/Move"
+
+interface IProps {
+  tour: Tour
+}
+
+const props = defineProps<IProps>()
+
+onMounted(() => {
+  console.log("Mounted")
+})
+
+onUpdated(() => {
+  console.log("Updated")
+
+  fetch(`http://localhost:3000/tours/lich-trinh/${props.tour.ma_tour}`)
+    .then((res) => res.json())
+    .then((data: Schedule[]) => {
+      console.log(data)
+      fetchSchedule.value = data.map((item, index) => {
+        return {
+          ...item,
+          ngay_thu: index + 1,
+          tg_bat_dau: new Date(item.tg_bat_dau).toLocaleTimeString(),
+          tg_ket_thuc: new Date(item.tg_ket_thuc).toLocaleTimeString(),
+          stt: 1,
+        }
+      })
+    })
+
+  fetch(`http://localhost:3000/tours/lo-trinh/${props.tour.ma_tour}`)
+    .then((res) => res.json())
+    .then((data: Move[]) => {
+      console.log(data)
+      fetchMove.value = data.map((move, index) => {
+        return {
+          ...move,
+          stt: index + 1,
+        }
+      })
+    })
+})
 
 const tourName = ref("Tour du lịch Cao Bằng 2 ngày 1 đêm")
 const tourTime = ref("08:00 - 03/08/2022")
 const tourSlot = ref(5)
 
-const header = ref([
+const headerSchedule = ref([
   {
-    key: "ngày_thứ",
+    key: "ngay_thu",
     label: "Ngày thứ",
     thStyle: { width: "8%" },
   },
   {
-    key: "thời_gian_bắt_đầu",
+    key: "stt",
+    label: "STT",
+    thStyle: { width: "8%" },
+  },
+  {
+    key: "tg_bat_dau",
     label: "Thời gian bắt đầu",
     thStyle: { width: "14%" },
   },
   {
-    key: "thời_gian_kết_thúc",
+    key: "tg_ket_thuc",
     label: "Thời gian kết thúc",
     thStyle: { width: "14%" },
   },
   {
-    key: "địa_điểm_tham_quan",
+    key: "full_address",
     label: "Địa điểm tham quan",
     thStyle: { width: "17%" },
   },
   {
-    key: "mô_tả",
+    key: "add_desc",
     label: "Mô tả",
   },
 ])
-const schedule = ref([
+
+const headerMove = ref([
   {
-    ngày_thứ: 1,
-    thời_gian_bắt_đầu: "14:00",
-    thời_gian_kết_thúc: "21:00",
-    địa_điểm_tham_quan: "Sông Năng - Hồ Ba Bể",
-    mô_tả:
-      "Đoàn lên thuyền tiếp tục xuôi dòng sông Năng vào hồ Ba Bể (quý khách mang theo toàn bộ hành lí và tư trang cá nhân lên thuyền)",
+    key: "stt",
+    label: "STT",
+    thStyle: { width: "8%" },
   },
   {
-    ngày_thứ: 2,
-    thời_gian_bắt_đầu: "7:30",
-    thời_gian_kết_thúc: "21:00",
-    địa_điểm_tham_quan: "Thác Bản Giốc - Động Ngườm Ngao",
-    mô_tả:
-      "Đến Bản Giốc quý khách dùng bữa trưa tại nhà hàng với những món ăn đặc sắc của vùng miền, sau bữa trưa quý khách tiếp tục hành trình tham quan thác thác Bản Giốc có độ cao 53m, chia làm 3 tầng được coi là thác đẹp nhất Việt Nam và là thác lớn nhất Đông Nam Á. Thác cũng là nơi giáp ranh với nước bạn Trung Hoa với cột mốc chủ quyền thiêng liêng của Tổ Quốc. Tiếp tục hành trình, Quý khách thăm Động Ngườm Ngao – một trong những động dài và đẹp nhất Việt Nam với nhiều truyền thuyết phong phú của dân tộc Tày, thăm động Ngườm Ngao với vô vàn những măng đá, nhũ đá đẹp mắt.",
+    key: "ten_noi_khoi_hanh",
+    label: "Nơi khởi hành",
+    thStyle: { width: "14%" },
   },
   {
-    ngày_thứ: 3,
-    thời_gian_bắt_đầu: "7:30",
-    thời_gian_kết_thúc: "21:00",
-    địa_điểm_tham_quan: "Thác Bản Giốc - Động Ngườm Ngao",
-    mô_tả:
-      "Đến Bản Giốc quý khách dùng bữa trưa tại nhà hàng với những món ăn đặc sắc của vùng miền, sau bữa trưa quý khách tiếp tục hành trình tham quan thác thác Bản Giốc có độ cao 53m, chia làm 3 tầng được coi là thác đẹp nhất Việt Nam và là thác lớn nhất Đông Nam Á. Thác cũng là nơi giáp ranh với nước bạn Trung Hoa với cột mốc chủ quyền thiêng liêng của Tổ Quốc. Tiếp tục hành trình, Quý khách thăm Động Ngườm Ngao – một trong những động dài và đẹp nhất Việt Nam với nhiều truyền thuyết phong phú của dân tộc Tày, thăm động Ngườm Ngao với vô vàn những măng đá, nhũ đá đẹp mắt.",
+    key: "ten_noi_den",
+    label: "Nơi đến",
+    thStyle: { width: "14%" },
+  },
+  {
+    key: "tg_di_chuyen",
+    label: "Thời gian di chuyển (giờ)",
+    thStyle: { width: "14%" },
   },
 ])
+
+const fetchSchedule = ref<Schedule[]>([])
+const fetchMove = ref<Move[]>([])
 </script>
 
 <style lang="scss" scoped>
