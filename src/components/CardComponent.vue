@@ -1,10 +1,6 @@
 <template>
   <div class="card mb-3" style="width: 24%">
-    <img
-      src="../assets/tour-du-lich-cao-bang-2-ngay-1-dem-750x460.webp"
-      class="card-img-top"
-      alt=""
-    />
+    <img :src="imgSrc" class="card-img-top" alt="" />
     <div class="card-body">
       <h5 class="card-title fw-bold my-card-title">
         {{ props.tour.ten_tour }}
@@ -75,7 +71,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from "vue"
+import { ref, defineProps, computed, onBeforeMount } from "vue"
+import { getRandImg } from "../assets/path"
 import { Tour } from "../models/Tour"
 import DetailModal from "./DetailModalComponent.vue"
 
@@ -98,6 +95,8 @@ const onModalHidden = () => {
 
   isModalActive.value = false
 }
+
+const imgSrc = computed(() => getRandImg("./img/place/"))
 </script>
 
 <style lang="scss">
