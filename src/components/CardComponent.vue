@@ -1,20 +1,31 @@
 <template>
-  <div class="card" style="width: 18rem">
+  <div class="card mb-3" style="width: 32%">
     <img
       src="../assets/tour-du-lich-cao-bang-2-ngay-1-dem-750x460.webp"
       class="card-img-top"
       alt=""
     />
     <div class="card-body">
-      <h5 class="card-title fw-bold">{{ tourName }}</h5>
+      <h5 class="card-title fw-bold my-card-title">
+        {{ props.tour.ten_tour }}
+      </h5>
+      <div class="card-text fs-6 mb-3">
+        Thời gian khởi hành: <br />{{ props.tour.bat_dau }}
+      </div>
+      <div class="card-text fs-6 my-3">Số ngày: {{ props.tour.so_ngay }}</div>
       <div class="card-text fs-6 my-3">
-        Thời gian khởi hành: <br />
-        {{ tourTime }}
+        Còn:
+        <span class="fs-5 fw-bold text-primary">{{
+          props.tour.so_slot_con_lai
+        }}</span>
+        chỗ
       </div>
       <div class="card-text fs-6 my-3">
-        Còn: <span class="fs-5 fw-bold text-primary">{{ tourSlot }}</span> chỗ
+        Thời hạn đăng kí: <br />{{ props.tour.kt_dk_ngay }}
       </div>
-      <div class="card-text text-danger fw-bold my-3">{{ tourPrice }} VND</div>
+      <div class="card-text text-danger fs-5 fw-bold my-3">
+        {{ props.tour.gia_tien_dk }} VND
+      </div>
       <a href="#" class="btn btn-danger float-start mb-3">Đặt tour</a>
 
       <div>
@@ -30,17 +41,22 @@
 </template>
 
 <script lang="ts" setup>
-import DetailModal from "./DetailModalComponent.vue"
-import { ref } from "vue"
+import { defineProps } from "vue"
+import { Tour } from "../models/Tour"
 
-const tourName = ref("Tour du lịch Cao Bằng 2 ngày 1 đêm")
-const tourPrice = ref("5.000.000")
-const tourTime = ref("08:00 - 03/08/2022")
-const tourSlot = ref(5)
+interface IProps {
+  tour: Tour
+}
+const props = defineProps<IProps>()
 </script>
 
 <style lang="scss">
 .card {
   display: inline-block !important;
+}
+
+.my-card-title {
+  text-overflow: ellipsis;
+  height: 70px;
 }
 </style>

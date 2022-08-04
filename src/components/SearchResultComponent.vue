@@ -3,40 +3,24 @@
     <label class="fs-3" for="tags-basic">Điểm đến đã chọn: </label>
     <b-form-tags
       placeholder=" "
-      class="fs-5 w-80"
+      class="fs-5"
       input-id="tags-basic"
       v-model="result"
       @click="testOnClick"
     >
     </b-form-tags>
-    <!-- <p class="mt-2">Value: {{ result }}</p> -->
+    <p class="mt-2">
+      Chúng tôi tìm thấy: <span color="red">{{ tourNumber }}</span> tour cho bạn
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  defineProps,
-  onMounted,
-  onUpdated,
-  ref,
-  defineEmits,
-  watch,
-  PropType,
-} from "vue"
-import { Province } from "../models/Province.js"
+import { computed, onUpdated } from "vue"
 import { useStore } from "vuex"
 import { key } from "../store"
 const store = useStore(key)
-// const result = ref([
-//   "Apple",
-//   "Orange",
-//   "Banana",
-//   "Lime",
-//   "Peach",
-//   "Chocolate",
-//   "Strawberry",
-// ])
+
 const result = computed(() => store.getters.getArrayProvincesNames)
 
 const testOnClick = (e: any) => {
@@ -50,9 +34,7 @@ onUpdated(() => {
   console.log("onUpdated")
 })
 
-const props = defineProps({
-  testProps: { type: Array, required: true },
-})
+const tourNumber = computed(() => store.state.tourSearchResult.length)
 </script>
 
 <style lang="scss" scoped></style>

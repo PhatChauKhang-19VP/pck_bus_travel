@@ -1,12 +1,14 @@
 <template>
   <TheHeader />
-  <div id="mainContent">
+  <div id="main">
     <TheSidebar />
-    <div id="cardGroup">
-      <TheSearchResult class="mx-3 mb-3" :test-prop="['phat', 'chau']" />
-      <TheCard class="mx-3" />
-      <TheCard class="mx-3" />
-      <TheCard class="mx-3" />
+    <div id="mainContent">
+      <TheSearchResult class="mb-3" />
+      <div id="cardGroup">
+        <template v-for="p in listTours" :key="p.ma_tour">
+          <TheCard class="" :tour="p" />
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -16,25 +18,49 @@ import TheHeader from "@/components/HeaderComponent.vue" // @ is an alias to /sr
 import TheSidebar from "@/components/SidebarComponent.vue"
 import TheCard from "@/components/CardComponent.vue"
 import TheSearchResult from "@/components/SearchResultComponent.vue"
-import { reactive, ref } from "vue"
+import { reactive, ref, onMounted, computed } from "vue"
+import { useStore } from "vuex"
+import { key } from "../store"
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ds_ma_tinh: Array.from(store.state.provincesSelected),
+      ngay_di: "",
+      so_nguoi: store.state.filterObject.so_nguoi,
+      from_so_ngay: store.state.filterObject.so_ngay.value.split("-")[0],
+      to_so_ngay: store.state.filterObject.so_ngay.value.split("-")[1],
+      from_gia_tien: store.state.filterObject.khoang_gia.low,
+      to_gia_tien: store.state.filterObject.khoang_gia.high,
+    }),
+  })
+  const data = await response.json()
+  store.commit("setTourSearchResult", Array.from(data))
+})
 
-const searchResults = ref<string[]>(["orange", "blue", "yellow"])
+const listTours = computed(() => {
+  return store.state.tourSearchResult
+})
 </script>
 
 <style lang="scss" scoped>
-#mainContent {
+#main {
   display: inline-block;
   width: 100%;
   height: 100%;
-  position: relative;
-  padding-top: 5px;
+}
+
+#mainContent {
+  display: inline-block;
+  width: calc(100% - 320px);
+  position: absolute;
+  left: 310px;
 }
 
 #cardGroup {
-  display: inline-block;
-  width: fit-content;
-  position: absolute;
-  left: 300px;
-  top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
