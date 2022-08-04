@@ -9,34 +9,51 @@
       <h5 class="card-title fw-bold my-card-title">
         {{ props.tour.ten_tour }}
       </h5>
-      <div class="card-text fs-6 mb-1">
-        Thời gian khởi hành:
-        <strong>{{ getDateMMDDYYYY(new Date(props.tour.bat_dau)) }}</strong>
+      <div class="card-text fs-6 mb-1 d-flex justify-content-between">
+        <div>
+          Số ngày:
+          <span class="fs-5 fw-bold text-primary">{{
+            props.tour.so_ngay
+          }}</span>
+        </div>
+        <div>
+          Còn:
+          <span class="fs-5 fw-bold text-primary">{{
+            props.tour.so_slot_con_lai
+          }}</span>
+          chỗ
+        </div>
       </div>
-      <div class="card-text fs-6 my-1">
-        Số ngày: <strong>{{ props.tour.so_ngay }}</strong>
-      </div>
-      <div class="card-text fs-6 my-1">
+      <!-- <div class="card-text fs-6 my-1">
         Còn:
         <span class="fs-5 fw-bold text-primary">{{
           props.tour.so_slot_con_lai
         }}</span>
         chỗ
+      </div> -->
+      <div class="card-text fs-6 my-1">
+        Thời gian khởi hành:
+        <strong>{{ getDateMMDDYYYY(new Date(props.tour.bat_dau)) }}</strong>
       </div>
       <div class="card-text fs-6 my-1">
         Thời hạn đăng kí:
         <strong>{{ getDateMMDDYYYY(new Date(props.tour.kt_dk_ngay)) }}</strong>
       </div>
-      <div class="card-text text-danger fs-5 fw-bold my-1">
+      <div class="card-text fs-5 fw-bold my-1" style="color: #ff6961">
         {{ props.tour.gia_tien_dk }} VND
       </div>
-      <a href="#" class="btn btn-danger float-start mb-1">Đặt tour</a>
+      <a
+        href="#"
+        class="btn fw-bold float-start mb-2"
+        style="background-color: #ff6961; color: white"
+        >Đặt tour</a
+      >
 
       <div>
         <b-button
           v-b-modal.modal
           variant="primary"
-          class="float-end mb-1"
+          class="fw-bold float-end mb-2"
           v-on:click="
             () => {
               isModalActive = true
