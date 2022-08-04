@@ -15,21 +15,21 @@
             <TheCard class="" :tour="p" />
           </template>
         </template>
-        <center>
-          <div class="overflow-auto py-2" :v-show="rows >= 1">
-            <!-- Use text in props -->
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="perPage"
-              first-text="First"
-              prev-text="Prev"
-              next-text="Next"
-              last-text="Last"
-            ></b-pagination>
-          </div>
-        </center>
       </div>
+      <center>
+        <div class="overflow-auto py-2" :v-show="rows >= 1">
+          <!-- Use text in props -->
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            first-text="Trang đầu"
+            prev-text="Trang trước"
+            next-text="Trang sau"
+            last-text="Trang cuối"
+          ></b-pagination>
+        </div>
+      </center>
     </div>
   </div>
 </template>
@@ -80,9 +80,7 @@ store.watch(
     console.log("store.watch", store.state.tourSearchResult)
 
     currentPage.value = 1
-    rows.value = parseInt(
-      `${store.state.tourSearchResult.length / TOUR_PER_PAGE}`
-    )
+    rows.value = parseInt(`${store.state.tourSearchResult.length}`)
   }
 )
 </script>
