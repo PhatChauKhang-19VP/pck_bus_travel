@@ -86,9 +86,9 @@ const listTours = computed(() => {
 
 #mainContent {
   display: inline-block;
-  width: calc(100% - 320px);
+  width: calc(100% - 330px);
   position: absolute;
-  left: 310px;
+  left: 320px;
 }
 
 #cardGroup {
