@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3" style="width: 32%">
+  <div class="card mb-3" style="width: 24%">
     <img
       src="../assets/tour-du-lich-cao-bang-2-ngay-1-dem-750x460.webp"
       class="card-img-top"
@@ -9,27 +9,31 @@
       <h5 class="card-title fw-bold my-card-title">
         {{ props.tour.ten_tour }}
       </h5>
-      <div class="card-text fs-6 mb-3">
-        Thời gian khởi hành: <br />{{ props.tour.bat_dau }}
+      <div class="card-text fs-6 mb-1">
+        Thời gian khởi hành:
+        <strong>{{ getDateMMDDYYYY(new Date(props.tour.bat_dau)) }}</strong>
       </div>
-      <div class="card-text fs-6 my-3">Số ngày: {{ props.tour.so_ngay }}</div>
-      <div class="card-text fs-6 my-3">
+      <div class="card-text fs-6 my-1">
+        Số ngày: <strong>{{ props.tour.so_ngay }}</strong>
+      </div>
+      <div class="card-text fs-6 my-1">
         Còn:
         <span class="fs-5 fw-bold text-primary">{{
           props.tour.so_slot_con_lai
         }}</span>
         chỗ
       </div>
-      <div class="card-text fs-6 my-3">
-        Thời hạn đăng kí: <br />{{ props.tour.kt_dk_ngay }}
+      <div class="card-text fs-6 my-1">
+        Thời hạn đăng kí:
+        <strong>{{ getDateMMDDYYYY(new Date(props.tour.kt_dk_ngay)) }}</strong>
       </div>
-      <div class="card-text text-danger fs-5 fw-bold my-3">
+      <div class="card-text text-danger fs-5 fw-bold my-1">
         {{ props.tour.gia_tien_dk }} VND
       </div>
-      <a href="#" class="btn btn-danger float-start mb-3">Đặt tour</a>
+      <a href="#" class="btn btn-danger float-start mb-1">Đặt tour</a>
 
       <div>
-        <b-button v-b-modal.modal variant="primary" class="float-end mb-3"
+        <b-button v-b-modal.modal variant="primary" class="float-end mb-1"
           >Xem chi tiết</b-button
         >
 
@@ -43,6 +47,14 @@
 <script lang="ts" setup>
 import { defineProps } from "vue"
 import { Tour } from "../models/Tour"
+import DetailModal from "./DetailModalComponent.vue"
+
+const getDateMMDDYYYY = (date: Date) => {
+  const day = date.getDate()
+  const month = date.getMonth() + 1
+  const year = date.getFullYear()
+  return `${month}/${day}/${year}`
+}
 
 interface IProps {
   tour: Tour

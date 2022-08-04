@@ -5,9 +5,30 @@
     <div id="mainContent">
       <TheSearchResult class="mb-3" />
       <div id="cardGroup">
-        <template v-for="p in listTours" :key="p.ma_tour">
-          <TheCard class="" :tour="p" />
+        <template v-for="(p, index) in listTours" :key="p.ma_tour">
+          <template
+            v-if="
+              TOUR_PER_PAGE * (currentPage - 1) <= index &&
+              index < TOUR_PER_PAGE * currentPage
+            "
+          >
+            <TheCard class="" :tour="p" />
+          </template>
         </template>
+        <center>
+          <div class="overflow-auto py-2">
+            <!-- Use text in props -->
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              first-text="First"
+              prev-text="Prev"
+              next-text="Next"
+              last-text="Last"
+            ></b-pagination>
+          </div>
+        </center>
       </div>
     </div>
   </div>
@@ -21,6 +42,18 @@ import TheSearchResult from "@/components/SearchResultComponent.vue"
 import { reactive, ref, onMounted, computed } from "vue"
 import { useStore } from "vuex"
 import { key } from "../store"
+
+const currentPage = ref(1)
+const TOUR_PER_PAGE = 8
+const perPage = ref(TOUR_PER_PAGE)
+const rows = computed(() => {
+  return parseInt(`${store.state.tourSearchResult.length / TOUR_PER_PAGE}`)
+})
+
+const store = useStore(key)
+onMounted(async () => {
+  const response = await fetch("http://localhost:3000/tours/tim-tour", {
+    method: "post",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -36,9 +69,9 @@ import { key } from "../store"
     }),
   })
   const data = await response.json()
+  currentPage.value = 1
   store.commit("setTourSearchResult", Array.from(data))
 })
-
 const listTours = computed(() => {
   return store.state.tourSearchResult
 })

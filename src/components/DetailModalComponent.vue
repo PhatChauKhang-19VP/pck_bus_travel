@@ -10,9 +10,15 @@
     <div class="my-1">Thời gian khởi hành: {{ tourTime }}</div>
     <div class="my-1">Địa điểm khởi hành: TP.Hồ Chí Minh</div>
     <div class="my-1">Số chỗ còn lại: {{ tourSlot }}</div>
-    <h4 class="my-1 fw-bold">Lịch trình:</h4>
+    <div>
+      <b-tabs content-class="mt-3">
+        <b-tab title="Lịch trình:" active
+          ><b-table bordered :fields="header" :items="schedule"></b-table
+        ></b-tab>
+        <b-tab title="Lộ trình"><p>I'm the second tab</p></b-tab>
+      </b-tabs>
+    </div>
 
-    <b-table bordered :fields="header" :items="schedule"></b-table>
     <!-- <h5 class="fs-5 my-1 ms-2">Ngày thứ {{ detail.nthDay }}:</h5>
             <ul>s
                 <li class="my-1">
