@@ -6,10 +6,23 @@
     size="xl"
     title="Thông tin tour"
   >
-    <h3 class="my-1 fw-bold">{{ tourName }}</h3>
-    <div class="my-1">Thời gian khởi hành: {{ tourTime }}</div>
-    <div class="my-1">Địa điểm khởi hành: TP.Hồ Chí Minh</div>
-    <div class="my-1">Số chỗ còn lại: {{ tourSlot }}</div>
+    <h3 class="my-1 fw-bold">{{ props.tour.ten_tour }}</h3>
+    <div class="my-1">
+      Thời gian khởi hành:
+      {{ new Date(`${props.tour.bat_dau}`).toLocaleString() }}
+    </div>
+    <div class="my-1">
+      Địa điểm khởi hành: {{ fetchMove[0]?.ten_noi_khoi_hanh }}
+    </div>
+    <div class="my-1">Số chỗ còn lại: {{ props.tour.so_slot_con_lai }}</div>
+    <a
+      href="#"
+      class="btn fw-bold float-start mb-2"
+      style="background-color: #ff6961; color: white"
+      >Đặt tour ngay</a
+    >
+    <br />
+    <br />
     <div>
       <b-tabs content-class="mt-3">
         <b-tab title="Lịch trình:" active
@@ -73,10 +86,6 @@ onUpdated(() => {
       })
     })
 })
-
-const tourName = ref("Tour du lịch Cao Bằng 2 ngày 1 đêm")
-const tourTime = ref("08:00 - 03/08/2022")
-const tourSlot = ref(5)
 
 const headerSchedule = ref([
   {
