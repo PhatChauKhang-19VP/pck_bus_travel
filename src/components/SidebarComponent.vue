@@ -70,7 +70,7 @@ import { key } from "../store"
 const store = useStore(key)
 
 let filterObject = ref({
-  ngay_di: Date.now(),
+  ngay_di: "",
   so_ngay: {
     stt: 1,
     text: "1 - 3 ngày",

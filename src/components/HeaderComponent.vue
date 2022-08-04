@@ -61,6 +61,7 @@ header {
         display: flex;
         align-items: center;
         flex-direction: row;
+        justify-content: space-between;
 
         > li.nav-item:nth-child(1) {
           width: 20%;
@@ -69,7 +70,7 @@ header {
         }
 
         > li.nav-item:nth-child(2) {
-          width: 39%;
+          width: 38%;
           display: flex;
           justify-content: center;
         }
@@ -79,7 +80,7 @@ header {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding-left: 10px;
+          // padding-left: 10px;
 
           img {
             width: 25px;

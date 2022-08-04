@@ -3,7 +3,7 @@
     <label class="fs-3" for="tags-basic">Điểm đến đã chọn: </label>
     <b-form-tags
       placeholder=" "
-      class="fs-5 w-80"
+      class="fs-5"
       input-id="tags-basic"
       v-model="result"
       @click="testOnClick"

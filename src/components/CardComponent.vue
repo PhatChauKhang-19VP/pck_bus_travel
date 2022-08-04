@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="width: 18rem">
+  <div class="card mb-3" style="width: 32%">
     <img
       src="../assets/tour-du-lich-cao-bang-2-ngay-1-dem-750x460.webp"
       class="card-img-top"
@@ -9,7 +9,7 @@
       <h5 class="card-title fw-bold my-card-title">
         {{ props.tour.ten_tour }}
       </h5>
-      <div class="card-text fs-6 my-3">
+      <div class="card-text fs-6 mb-3">
         Thời gian khởi hành: <br />{{ props.tour.bat_dau }}
       </div>
       <div class="card-text fs-6 my-3">Số ngày: {{ props.tour.so_ngay }}</div>
@@ -20,7 +20,10 @@
         }}</span>
         chỗ
       </div>
-      <div class="card-text text-danger fw-bold my-3">
+      <div class="card-text fs-6 my-3">
+        Thời hạn đăng kí: <br />{{ props.tour.kt_dk_ngay }}
+      </div>
+      <div class="card-text text-danger fs-5 fw-bold my-3">
         {{ props.tour.gia_tien_dk }} VND
       </div>
       <a href="#" class="btn btn-danger float-start mb-3">Đặt tour</a>
@@ -46,5 +49,6 @@ const props = defineProps<IProps>()
 
 .my-card-title {
   text-overflow: ellipsis;
+  height: 70px;
 }
 </style>

@@ -1,15 +1,14 @@
 <template>
   <TheHeader />
-  <div id="mainContent">
+  <div id="main">
     <TheSidebar />
-    <div id="cardGroup">
-      <TheSearchResult class="mx-3 mb-3" />
-      <!-- <TheCard class="mx-3" />
-      <TheCard class="mx-3" />
-      <TheCard class="mx-3" /> -->
-      <template v-for="p in listTours" :key="p.ma_tour">
-        <TheCard class="mx-3" :tour="p" />
-      </template>
+    <div id="mainContent">
+      <TheSearchResult class="mb-3" />
+      <div id="cardGroup">
+        <template v-for="p in listTours" :key="p.ma_tour">
+          <TheCard class="" :tour="p" />
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -51,19 +50,23 @@ const listTours = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-#mainContent {
+#main {
   display: inline-block;
   width: 100%;
   height: 100%;
   position: relative;
-  padding-top: 5px;
+}
+
+#mainContent {
+  display: inline-block;
+  width: calc(100% - 320px);
+  position: absolute;
+  left: 310px;
 }
 
 #cardGroup {
-  display: inline-block;
-  width: fit-content;
-  position: absolute;
-  left: 300px;
-  top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
