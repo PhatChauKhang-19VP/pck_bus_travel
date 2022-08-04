@@ -15,4 +15,11 @@
   padding-left: 15px;
   padding-right: 10px;
 }
+
+.btn-link {
+  text-decoration: none !important;
+  font-size: 20px !important;
+  font-weight: bolder !important;
+  color: #2c3e50 !important;
+}
 </style>

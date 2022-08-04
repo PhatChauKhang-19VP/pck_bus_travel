@@ -16,7 +16,7 @@
           </template>
         </template>
         <center>
-          <div class="overflow-auto py-2" v-if="rows >= 1">
+          <div class="overflow-auto py-2" :v-show="rows >= 1">
             <!-- Use text in props -->
             <b-pagination
               v-model="currentPage"
@@ -46,9 +46,7 @@ import { key } from "../store"
 const currentPage = ref(1)
 const TOUR_PER_PAGE = 8
 const perPage = ref(TOUR_PER_PAGE)
-const rows = computed(() => {
-  return parseInt(`${store.state.tourSearchResult.length / TOUR_PER_PAGE}`)
-})
+const rows = ref(1)
 
 const store = useStore(key)
 onMounted(async () => {
@@ -76,10 +74,17 @@ const listTours = computed(() => {
   return store.state.tourSearchResult
 })
 
-onUpdated(() => {
-  console.log("onUpdated")
-  currentPage.value = 1
-})
+store.watch(
+  (state) => state.tourSearchResult,
+  () => {
+    console.log("store.watch", store.state.tourSearchResult)
+
+    currentPage.value = 1
+    rows.value = parseInt(
+      `${store.state.tourSearchResult.length / TOUR_PER_PAGE}`
+    )
+  }
+)
 </script>
 
 <style lang="scss" scoped>
