@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="fs-3" for="tags-basic">Điểm đến đã chọn: </label>
+    <label class="fs-3" for="tags-basic">Điểm bạn muốn đến: </label>
     <b-form-tags
       placeholder=" "
       class="fs-5"
@@ -10,7 +10,8 @@
     >
     </b-form-tags>
     <p class="mt-2">
-      Chúng tôi tìm thấy: <span color="red">{{ tourNumber }}</span> tour cho bạn
+      Chúng tôi có <span style="color: red">{{ tourNumber }}</span> tour cho bạn
+      lựa chọn
     </p>
   </div>
 </template>
